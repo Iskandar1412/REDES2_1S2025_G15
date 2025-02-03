@@ -20,7 +20,7 @@ Grupo 15 -> 6 (1 + 5)
 
 #### Configuraciones Generales (Switches/Routers)
 
-- hostname (SW<A>_G<B> - Switch/RT<A>_G<B> - Router)
+- hostname (SW< A >_G< B > - Switch/RT< A >_G< B > - Router)
 - Server: redes2grupo<B> (tanto para nombre como para password)
     - Donde
         - A: Número Switch
@@ -110,3 +110,100 @@ switchport access vlan <VLAN>
 ```
 
 - Ver status de vtp: do sh vtp status
+
+
+
+### Configuracion de STP
+
+Se configuro el stp a cada switch de la topologia, se configuro rapid-PVST a los switches de la parte izquierda (desde SW0_G15 a SW10_G15) y PVST a los switches de la parte derecha (desde SW20_G15 a SW30_G15). <br><br>
+Los comandos utilizados para configurar el STP son los siguiente: <br><br>
+
+```
+enable
+configure terminal
+spanning-tree vlan 1 root primary
+exit
+wr
+```
+y para validar que se configuro correctamente se utilizo el siguiente comando: <br><br>
+```
+show spanning-tree
+```
+
+#### Configuracion de Rapid-PVST y PVST
+los switches al configurarle el STP tienen por defecto el PVST, y para configurarle el Rapid-PVST se utilizaron los siguientes comandos. <br><br>
+
+```
+enable 
+configure terminal
+spanning-tree mode rapid-pvst
+exit
+wr
+```
+
+y para validar que se configuro correctamente se utilizo el siguiente comando: <br><br>
+```
+show spanning-tree
+```
+
+### Seguridad de Interfaces de red
+
+Para mayor seguridad en la topologia se aplicaron politicas de seguridad sobre las interfaces de los equipos de la capa 2, por lo que se realizaron las siguientes politicas: <br><br>
+
+#### Desactivar protocolos DTP
+
+Se desactivo el protocolo DTP de los puertos troncales de los switches para que estos no cambien de modo troncal a modo acceso y provocar fallas de conectividad o seguridad.
+
+<br>
+Los comandos utilizados para desactivar este protocolo son los siguientes: <br><br>
+
+```
+enable 
+configure terminal
+interface Fa0/23
+switchport mode trunk
+switchport nonegotiate
+end
+write memory
+
+```
+
+ Y para validar si este protocolo ya esta desactivado se debe ejecutar el siguiente comando: <br> 
+
+ ```
+show interfaces Fa0/24 switchport 
+
+```
+Esto mostrara una salida similar a la siguiente 
+
+
+ ```
+Name: Fa0/24
+Switchport: Enabled
+Administrative Mode: trunk
+Operational Mode: trunk
+Administrative Trunking Encapsulation: dot1q
+Operational Trunking Encapsulation: dot1q
+Negotiation of Trunking: Off                <-------Validar off
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 1 (default)
+Voice VLAN: none
+Administrative private-vlan host-association: none
+Administrative private-vlan mapping: none
+Administrative private-vlan trunk native VLAN: none
+Administrative private-vlan trunk encapsulation: dot1q
+Administrative private-vlan trunk normal VLANs: none
+Administrative private-vlan trunk private VLANs: none
+Operational private-vlan: none
+Trunking VLANs Enabled: All
+Pruning VLANs Enabled: 2-1001
+Capture Mode Disabled
+Capture VLANs Allowed: ALL
+Protected: false
+Unknown unicast blocked: disabled
+Unknown multicast blocked: disabled
+Appliance trust: none
+
+```
+
+#### Activar el port-security de los puertos
