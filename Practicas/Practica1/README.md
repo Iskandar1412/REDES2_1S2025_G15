@@ -207,3 +207,48 @@ Appliance trust: none
 ```
 
 #### Activar el port-security de los puertos
+
+Se activa el port-security unicamente en los puertos donde se conectan los dispositivos finales, ya que se utiliza para evitar dispositivos no autorizados, y asi tener una mejor seguridad en nuestra red.<br><br>
+
+Los comandos utilizados son los siguientes: 
+
+ ```
+enable
+configure terminal
+interface Fa0/1
+switchport mode access    
+switchport port-security  
+switchport port-security maximum 2  
+switchport port-security violation restrict  
+switchport port-security aging time 5 
+exit
+exit
+wr
+
+```
+
+Para validar que se ejecutaron correctamente los comandos podemos utilizar el siguiente comando: <br>
+
+ ```
+show port-security interface Fa0/1 
+```
+
+Y obtendremos una salida similar a la siguiente: 
+
+ ```
+SW30_G15#show port-security interface Fa0/1 
+%SYS-5-CONFIG_I: Configured from console by console
+
+Port Security              : Enabled   <-- VEMOS QUE ESTA ACTIVO
+Port Status                : Secure-up
+Violation Mode             : Restrict
+Aging Time                 : 5 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 2
+Total MAC Addresses        : 0
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0 
+```
