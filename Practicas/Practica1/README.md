@@ -252,3 +252,68 @@ Sticky MAC Addresses       : 0
 Last Source Address:Vlan   : 0000.0000.0000:0
 Security Violation Count   : 0 
 ```
+
+#### Configurar port-security mac-address
+
+Se activa el port-security mac-address en los puertos donde se conectan los dispositivos finales, para restringir el uso del puerto a un unico host, y asi tener una mejor seguridad en nuestra red.<br><br>
+
+Los comandos utilizados son los siguientes: 
+
+ ```
+enable
+configure terminal
+interface Fa0/1   
+switchport port-security  
+switchport port-security maximum 1 
+switchport port-security mac-address <dirección_MAC>
+switchport port-security violation shutdown  
+switchport no shutdown
+exit
+exit
+write memory
+
+```
+
+Para ver la seguridad del puerto podemos utilizar el siguiente comando: <br>
+
+ ```
+show port-security interface Fa0/1 
+```
+
+Y obtendremos una salida similar a la siguiente: 
+
+ ```
+SW8_G15#show port-security interface Fa0/1 
+
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Shutdown
+Aging Time                 : 5 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 1
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0
+```
+
+Para ver la dirección mac aprendida en el puerto podemos utilizar el siguiente comando: <br>
+
+ ```
+show port-security address 
+```
+
+Y obtendremos una salida similar a la siguiente: 
+
+ ```
+SW8_G15#show port-security address
+               Secure Mac Address Table
+-----------------------------------------------------------------------------
+Vlan    Mac Address       Type                          Ports   Remaining Age
+                                                                   (mins)
+----    -----------       ----                          -----   -------------
+  26    <dirección mac>   SecureConfigured              Fa0/1        -
+-----------------------------------------------------------------------------
+```
