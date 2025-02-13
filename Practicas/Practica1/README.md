@@ -10,12 +10,20 @@
 
 Grupo 15 -> 6 (1 + 5)
 ```
+-- Lado Izquierdo
 // Primaria      -> 16
    - 192.168.16.0/24
 // Básicos       -> 26
    - 192.168.26.0/24
 // Diversificado -> 36
    - 192.168.36.0/24
+-- Lado Derecho
+// Primaria      -> 46
+   - 192.168.46.0/24
+// Básicos       -> 56
+   - 192.168.56.0/24
+// Diversificado -> 66
+   - 192.168.66.0/24
 ```
 
 #### Configuraciones Generales (Switches/Routers)
@@ -34,6 +42,15 @@ hostname SW<A>_G15
 do wr
 ```
 
+#### Configuración Secret (Servidor)
+
+```
+-- CONFIGURAR PASS MODO PRIVILEGIADO
+enable
+conf terminal
+enable secret redes2grupo15
+```
+
 #### Configuraciones Switches (Conectados a PC y otros switches)
 
 - Ver cuales son los puertos conectados a PC (preferencia pc primeros y switches últimos valores)
@@ -47,6 +64,7 @@ switchport trunk allowed vlan all
 - En caso de las que están solo conectados entre switches (del 1 al 24) modo trunk
 - Los que serán servidores solo los puertos que están conectados a los swiches con el modo trunk
 
+
 #### VLAN (Creación -> En servidores únicamente)
 
 ```
@@ -55,6 +73,18 @@ name <NOMBRE_VLAN>
 ```
 
 ```
+# LADO IZQUIERDO
+vlan 16
+name PRIMARIA
+exit
+vlan 26
+name BASICOS
+exit
+vlan 36
+name DIVERSIFICADO
+exit
+
+# LADO DERECHO
 vlan 16
 name PRIMARIA
 exit
@@ -111,7 +141,109 @@ switchport access vlan <VLAN>
 
 - Ver status de vtp: do sh vtp status
 
+#### Vlan en ROUTER
 
+```
+-- ROUTER IZQUIERDO
+interface GigabitEthernet0/1.16
+encapsulation dot1Q 16
+ip address 192.168.16.1 255.255.255.0
+exit
+interface GigabitEthernet0/1.26
+encapsulation dot1Q 26
+ip address 192.168.26.1 255.255.255.0
+exit
+interface GigabitEthernet0/1.36
+encapsulation dot1Q 36
+ip address 192.168.36.1 255.255.255.0
+exit
+do wr
+
+-- ROUTER DERECHO
+interface GigabitEthernet0/1.46
+encapsulation dot1Q 46
+ip address 192.168.46.1 255.255.255.0
+exit
+interface GigabitEthernet0/1.56
+encapsulation dot1Q 56
+ip address 192.168.56.1 255.255.255.0
+exit
+interface GigabitEthernet0/1.66
+encapsulation dot1Q 66
+ip address 192.168.66.1 255.255.255.0
+exit
+do wr
+```
+
+### Configuración Redistribuciones
+
+```
+-- ROUTER LATERAL IZQUIERDO (OSPF)
+router ospf 1
+network 10.0.16.0 0.0.0.255 area 0
+network 192.168.16.0 0.0.0.255 area 0
+network 192.168.26.0 0.0.0.255 area 0
+network 192.168.36.0 0.0.0.255 area 0
+exit
+do wr
+
+-- ROUTER CENTRAL IZQUIERDO (OSPF/RIP)
+interface GigabitEthernet0/0
+ip address 10.0.16.2 255.255.255.0
+exit
+
+interface GigabitEthernet0/1
+ip address 10.0.26.1 255.255.255.0
+exit
+
+
+router ospf 1
+redistribute rip subnets 
+network 10.0.16.0 0.0.0.255 area 0
+exit
+
+router rip
+version 2
+redistribute ospf 1 metric 1 
+network 10.0.0.0
+no auto-summary
+exit
+do wr
+
+-- ROUTER CENTRAL DERECHO (RIP/EIGRP)
+interface GigabitEthernet0/0
+ip address 10.0.36.1 255.255.255.0
+exit
+
+interface GigabitEthernet0/1
+ip address 10.0.26.2 255.255.255.0
+exit
+
+
+router eigrp 100
+redistribute rip metric 1 0 1 1 1 
+network 10.0.0.0
+no auto-summary
+exit
+
+router rip
+version 2
+redistribute eigrp 100 metric 1 
+network 10.0.0.0
+no auto-summary
+exit
+do wr
+
+-- ROUTER LATERAL DERECHO (EIGRP)
+router eigrp 100
+network 10.0.0.0
+network 192.168.46.0
+network 192.168.56.0
+network 192.168.66.0
+no auto-summary
+exit
+do wr
+```
 
 ### Configuracion de STP
 
