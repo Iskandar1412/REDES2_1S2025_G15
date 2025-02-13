@@ -317,3 +317,16 @@ Vlan    Mac Address       Type                          Ports   Remaining Age
   26    <dirección mac>   SecureConfigured              Fa0/1        -
 -----------------------------------------------------------------------------
 ```
+
+## Elección de Escenario con Mejor Convergencia
+
+
+Se realizo un estudio para conocer cual es el mejor escenario de protocolo de spanning-tree, los resultados son los siguientes: <br>
+
+| Escenario | Protocolo Spanning-tree | Primaria | Basicos | Diversificados |
+|-----------|-------------------------|----------|---------|----------------|
+|     1     | PVST (lado derecho)     |     5    |    5    |        5       |
+|     2     | RPVST (lado izquierdo)  |     0    |    1    |        2       |
+
+<br>
+Segun los datos obtenidos por la tabla, se puede identificar que la mejor propuesta de protocolo de spanning-tree es el **RPVST**, debido a que su tiempo de convergencia comparado con el de PVST es bastante mas rapido.
