@@ -49,6 +49,22 @@ do wr
 enable
 conf terminal
 enable secret redes2grupo15
+do wr
+
+# CONFIGURAR PASSWORD PARA ACCESOS POR CONSOLA
+line console 0
+password redes2grupo15
+login
+exit
+
+# CONFIGURAR PASSWORD PARA ACCESOS REMOTOS
+line vty 0 4
+password redes2grupo15
+login
+exit
+
+# ENCRIPTAR CONTRASEÑAS VISIBLES
+service password-encryption
 ```
 
 #### Configuraciones Switches (Conectados a PC y otros switches)
@@ -245,6 +261,12 @@ exit
 do wr
 ```
 
+- Ver Protocolos
+
+```
+sh ip protocol
+```
+
 ### Configuracion de STP
 
 Se configuro el stp a cada switch de la topologia, se configuro rapid-PVST a los switches de la parte izquierda (desde SW0_G15 a SW10_G15) y PVST a los switches de la parte derecha (desde SW20_G15 a SW30_G15). <br><br>
@@ -356,7 +378,11 @@ switchport port-security aging time 5
 exit
 exit
 wr
+```
 
+- Verificar port security
+```
+sh port-security interface 0/1
 ```
 
 Para validar que se ejecutaron correctamente los comandos podemos utilizar el siguiente comando: <br>
@@ -439,7 +465,7 @@ show port-security address
 
 Y obtendremos una salida similar a la siguiente: 
 
- ```
+```
 SW8_G15#show port-security address
                Secure Mac Address Table
 -----------------------------------------------------------------------------
@@ -461,4 +487,8 @@ Se realizo un estudio para conocer cual es el mejor escenario de protocolo de sp
 |     2     | RPVST (lado izquierdo)  |     0    |    1    |        2       |
 
 <br>
+
 Segun los datos obtenidos por la tabla, se puede identificar que la mejor propuesta de protocolo de spanning-tree es el **RPVST**, debido a que su tiempo de convergencia comparado con el de PVST es bastante mas rapido.
+
+Tomando en cuenta la eficiencia ya que el **PVST** requiere más recursos en el Swich, mientras que el **RPVST** utiliza menor cantidad de CPU.<br/>
+Como conclusión el modo más rápido el el Rapid PVST ya que garantiza una red estable y sin bucles, mejorando la experiencia de los alumnos.
