@@ -9,9 +9,9 @@
 
 ### Prácticas
 
-|          CARPETA          |   MD   | Fecha Entrega | Prorroga |
-| :------------------------: | :----: | :-----------: | :------: |
-| [Practica 1](./Practicas/Practica1/) | [View](.) | 14/Febrero |   ---   |
+|          CARPETA                     |   MD                           | Fecha Entrega | Prorroga |
+| :------------------------:           | :----:                         | :-----------: | :------: |
+| [Practica 1](./Practicas/Practica1/) | [View](./Practicas/Practica1/) | 14/Febrero    |   ---   |
 | [Practica 2](./Practicas/Practica2/) | [View](.) | --- |   ---   |
 | [Practica 3](./Practicas/Practica3/) | [View](.) | --- |   ---   |
 | [Practica 4](./Practicas/Practica4/) | [View](.) | --- |   ---   |
@@ -60,12 +60,12 @@
         <tr>
             <td rowspan=3 align="center">Proyectos</td>
             <td rowspan=1 align="center"><a href="./Enunciados/">Proyecto 1</a></td>
-            <td align="center">07/Septiembre</td>
+            <td align="center">---</td>
             <td align="center">---</td>
         </tr>
         <tr>
             <td rowspan=1 align="center"><a href="./Enunciados/">Proyecto 2</a></td>
-            <td align="center">25/Octubre</td>
+            <td align="center">---</td>
             <td align="center">---</td>
         </tr>
         <tr>
