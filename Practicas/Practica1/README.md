@@ -49,6 +49,22 @@ do wr
 enable
 conf terminal
 enable secret redes2grupo15
+do wr
+
+# CONFIGURAR PASSWORD PARA ACCESOS POR CONSOLA
+line console 0
+password redes2grupo15
+login
+exit
+
+# CONFIGURAR PASSWORD PARA ACCESOS REMOTOS
+line vty 0 4
+password redes2grupo15
+login
+exit
+
+# ENCRIPTAR CONTRASEÑAS VISIBLES
+service password-encryption
 ```
 
 #### Configuraciones Switches (Conectados a PC y otros switches)
