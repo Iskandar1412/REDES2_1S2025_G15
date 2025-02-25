@@ -20,7 +20,7 @@
 
 |     CARPETA     |   MD   | Fecha Entrega | Prorroga |
 | :-------------: | :----: | :-----------: | :------: |
-| [Proyecto 1](./Proyectos/Proyecto1) | [View](.) | --- |   ---   |
+| [Proyecto 1](./Proyectos/Proyecto1/) | [View](./Proyectos/Proyecto1/) | 07/Marzo |   ---   |
 | [Proyecto 2](./Proyectos/Proyecto2) | [View](.) | --- |   ---   |
 | [Proyecto 3](./Proyectos/Proyecto3) | [View](.) | --- |   ---   |
 
@@ -38,7 +38,7 @@
     <tbody>
         <tr>
             <td rowspan=4 align="center">Prácticas</td>
-            <td rowspan=1 align="center"><a href="./Enunciados/[REDES2]Pr1.pdf">Práctica 1</a></td>
+            <td rowspan=1 align="center"><a href="./Enunciados/RC2_Pr_1.pdf">Práctica 1</a></td>
             <td align="center">14/Febrero</td>
             <td align="center">---</td>
         </tr>
@@ -59,8 +59,8 @@
         </tr>
         <tr>
             <td rowspan=3 align="center">Proyectos</td>
-            <td rowspan=1 align="center"><a href="./Enunciados/">Proyecto 1</a></td>
-            <td align="center">---</td>
+            <td rowspan=1 align="center"><a href="./Enunciados/RC2_Proy_1.pdf">Proyecto 1</a></td>
+            <td align="center">07/Marzo</td>
             <td align="center">---</td>
         </tr>
         <tr>
