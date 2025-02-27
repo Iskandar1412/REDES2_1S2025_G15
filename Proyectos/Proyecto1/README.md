@@ -22,6 +22,15 @@ Como el grupo es 15 Quedarían:
 - 192.168.15.0/24</br>
 - 10.0.15.0/24</br>
 
+## Rapid PVST (Todos los switches)
+
+```shell
+enable
+conf t
+spanning-tree mode rapid-pvst
+do wr
+```
+
 
 ## Configuracion PAGP & LACP
 
@@ -81,6 +90,8 @@ do wr
 ## Configuración VTP Server
 enable
 conf t
+spanning-tree mode rapid-pvst
+vtp version 2
 vtp mode server
 vtp domain grupo15
 vtp password grupo15
@@ -95,6 +106,8 @@ do wr
 ## Configuración VTP Server
 enable
 conf t
+spanning-tree mode rapid-pvst
+vtp version 2
 vtp mode server
 vtp domain grupo15
 vtp password grupo15
@@ -112,6 +125,8 @@ do wr
 ## Configuración VTP Server
 enable
 conf t
+spanning-tree mode rapid-pvst
+vtp version 2
 vtp mode server
 vtp domain grupo15
 vtp password grupo15
@@ -126,41 +141,208 @@ exit
 do wr
 ```
 
+* VTP Clientes
+
+```shell
+vtp version 2
+vtp mode client
+vtp domain grupo15
+vtp password grupo15
+do wr
+```
+
 ## Configuración LACP/PAGP
 ```shell
 # SW8
 int range fa 0/22-24
-switchport trunk encapsulation dot1q
 channel-protocol lacp
-switchport trunk allowed vlan 25,35
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
 channel-group 1 mode active
 exit
 do wr
 
 # SW1
 int range gi 1/0/22-24
-switchport mode trunk
 channel-protocol lacp
-switchport trunk allowed vlan 25,35
+switchport mode trunk
+switchport trunk allowed vlan all
 channel-group 1 mode active
 exit
 do wr
 
 # SW12
 int range fa 0/22-24
-switchport trunk encapsulation dot1q
 channel-protocol pagp
-switchport trunk allowed vlan 45,55
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
 channel-group 2 mode desirable
 exit
 do wr
 
 # SW3
 int range gi 1/0/22-24
-switchport mode trunk
 channel-protocol pagp
-switchport trunk allowed vlan 45,55
+switchport mode trunk
+switchport trunk allowed vlan all
 channel-group 2 mode auto
+exit
+do wr
+```
+
+### LACP
+
+```shell
+# SW8
+int range fa 0/18-21
+channel-protocol lacp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 1 mode active
+exit
+do wr
+
+# SW5
+int range fa 0/18-21
+channel-protocol lacp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 1 mode active
+exit
+do wr
+
+# SW7
+int range fa 0/21-24
+channel-protocol lacp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 1 mode active
+exit
+do wr
+
+# SW6
+int range fa 0/21-24
+channel-protocol lacp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 1 mode active
+exit
+do wr
+
+int range fa 0/1-2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+
+# S1
+int fa 0/24
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+int range fa 0/1-2
+switchport mode access
+switchport access vlan 25
+exit
+do wr
+
+# S2
+int fa 0/24
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+int range fa 0/1-2
+switchport mode access
+switchport access vlan 35
+exit
+do wr
+```
+
+### PAGP
+
+```shell
+# SW12
+int range fa 0/18-21
+channel-protocol pagp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 2 mode desirable
+exit
+do wr
+
+# SW9
+int range fa 0/21-24
+channel-protocol pagp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 2 mode auto
+exit
+do wr
+
+# SW11
+int range fa 0/18-21
+channel-protocol pagp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 2 mode auto
+exit
+do wr
+
+# SW10
+int range fa 0/21-24
+channel-protocol pagp
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+channel-group 2 mode auto
+exit
+do wr
+
+int range fa 0/1-2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+# S3
+int fa 0/24
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+int range fa 0/1-2
+switchport mode access
+switchport access vlan 55
+exit
+do wr
+
+# S4
+int fa 0/24
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do wr
+
+int range fa 0/1-2
+switchport mode access
+switchport access vlan 45
 exit
 do wr
 ```
