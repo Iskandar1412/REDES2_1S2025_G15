@@ -42,6 +42,8 @@ no shut
 switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 10,20
+exit
+do wr
 -- Entrutamiento capa 3
 (se usa "ip routing") -- le dice al switch para enrutamiento
 vlan 10 
