@@ -39,111 +39,26 @@ Para los switches de arriba los que conectarán lateralmente con los otros edifi
 ### PAGP Lado Derecho
 
 ```shell
-# Router Inicial (SW12)
-enable
-conf t
-int range fa 0/22-24
-channel-protocol pagp
-channel-group 2 mode desirable
-no shut
-exit
-do wr
 
-# Segundo Router (SW3)
-enable
-conf t
-int range gi 1/0/22-24
-channel-protocol pagp
-channel-group 2 mode auto
-no shut
-exit
-do wr
 ```
 
 ### LACP Lado Izquierdo
 
 ```shell
 # Router Inicial (SW8)
-enable
-conf t
-int range fa 0/22-24
-channel-protocol lacp
-channel-group 1 mode active
-no shut
-exit
-do wr
 
-# Segundo Router (SW1)
-enable
-conf t
-int range gi 1/0/22-24
-channel-protocol lacp
-channel-group 1 mode active
-no shut
-exit
-do wr
 ```
 
 ## Configuración VLAN
 ```shell
-# SW4
-## Configuración VTP Server
-enable
-conf t
-spanning-tree mode rapid-pvst
-vtp version 2
-vtp mode server
-vtp domain grupo15
-vtp password grupo15
-do wr
-## Configuración VLAN
-vlan 15
-name VLAN_ADMIN
-exit
-do wr
 
-# SW8
-## Configuración VTP Server
-enable
-conf t
-spanning-tree mode rapid-pvst
-vtp version 2
-vtp mode server
-vtp domain grupo15
-vtp password grupo15
-do wr
-## Configuración VLAN
-vlan 25
-name VLAN_NARANJA_IZQ
-exit
-vlan 35
-name VLAN_VERDE_IZQ
-exit
-do wr
-
-# SW12
-## Configuración VTP Server
-enable
-conf t
-spanning-tree mode rapid-pvst
-vtp version 2
-vtp mode server
-vtp domain grupo15
-vtp password grupo15
-do wr
-## Configuración VLAN
-vlan 45
-name VLAN_NARANJA_DER
-exit
-vlan 55
-name VLAN_VERDE_DER
-exit
-do wr
 ```
 
 * VTP Clientes
 
 ```shell
+enable
+conf t
 vtp version 2
 vtp mode client
 vtp domain grupo15
@@ -153,196 +68,17 @@ do wr
 
 ## Configuración LACP/PAGP
 ```shell
-# SW8
-int range fa 0/22-24
-channel-protocol lacp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
 
-# SW1
-int range gi 1/0/22-24
-channel-protocol lacp
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
-
-# SW12
-int range fa 0/22-24
-channel-protocol pagp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode desirable
-exit
-do wr
-
-# SW3
-int range gi 1/0/22-24
-channel-protocol pagp
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode auto
-exit
-do wr
 ```
 
 ### LACP
 
 ```shell
-# SW8
-int range fa 0/18-21
-channel-protocol lacp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
 
-# SW5
-int range fa 0/18-21
-channel-protocol lacp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
-
-# SW7
-int range fa 0/21-24
-channel-protocol lacp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
-
-# SW6
-int range fa 0/21-24
-channel-protocol lacp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 1 mode active
-exit
-do wr
-
-int range fa 0/1-2
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-
-# S1
-int fa 0/24
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-int range fa 0/1-2
-switchport mode access
-switchport access vlan 25
-exit
-do wr
-
-# S2
-int fa 0/24
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-int range fa 0/1-2
-switchport mode access
-switchport access vlan 35
-exit
-do wr
 ```
 
 ### PAGP
 
 ```shell
-# SW12
-int range fa 0/18-21
-channel-protocol pagp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode desirable
-exit
-do wr
 
-# SW9
-int range fa 0/21-24
-channel-protocol pagp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode auto
-exit
-do wr
-
-# SW11
-int range fa 0/18-21
-channel-protocol pagp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode auto
-exit
-do wr
-
-# SW10
-int range fa 0/21-24
-channel-protocol pagp
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-channel-group 2 mode auto
-exit
-do wr
-
-int range fa 0/1-2
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-# S3
-int fa 0/24
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-int range fa 0/1-2
-switchport mode access
-switchport access vlan 55
-exit
-do wr
-
-# S4
-int fa 0/24
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-do wr
-
-int range fa 0/1-2
-switchport mode access
-switchport access vlan 45
-exit
-do wr
 ```
