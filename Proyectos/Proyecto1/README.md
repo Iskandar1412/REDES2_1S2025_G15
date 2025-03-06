@@ -594,3 +594,56 @@ exit
 do wr
 ```
 
+## ACL
+
+```shell
+# SW5
+enable
+conf t
+ip access-list extended VLAN15_ACL
+ deny icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo
+ permit icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+ deny ip 192.168.15.0 0.0.0.31 192.168.15.32 0.0.0.31
+ deny ip 192.168.15.0 0.0.0.31 192.168.15.128 0.0.0.31
+ permit ip any any
+exit
+ip access-list extended VLAN25_ACL
+ deny icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo
+ permit icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+ deny ip 192.168.15.32 0.0.0.31 192.168.15.0 0.0.0.31
+ deny ip 192.168.15.32 0.0.0.31 192.168.15.96 0.0.0.31
+ permit ip any any
+exit
+interface Vlan15
+ ip access-group VLAN15_ACL in
+exit
+interface Vlan25
+ ip access-group VLAN25_ACL in
+exit
+do wr
+
+# SW7
+enable
+conf t
+ip access-list extended VLAN45_ACL
+ deny icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo
+ permit icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+ deny ip 192.168.15.96 0.0.0.31 192.168.15.32 0.0.0.31
+ deny ip 192.168.15.96 0.0.0.31 192.168.15.128 0.0.0.31
+ permit ip any any
+exit
+ip access-list extended VLAN55_ACL
+ deny icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo
+ permit icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+ deny ip 192.168.15.128 0.0.0.31 192.168.15.0 0.0.0.31
+ deny ip 192.168.15.128 0.0.0.31 192.168.15.96 0.0.0.31
+ permit ip any any
+exit
+interface Vlan45
+ ip access-group VLAN45_ACL in
+exit
+interface Vlan55
+ ip access-group VLAN55_ACL in
+exit
+do wr
+```
