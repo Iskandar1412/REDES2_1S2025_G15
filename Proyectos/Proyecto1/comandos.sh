@@ -1,55 +1,4 @@
-# Manual Técnico Proyecto 1
-
-## Comandos Generales
-
-- G15 Para todos los dispositivos se aplicaron los siguientes comandos
-
-```shell
-enable
-conf t
-no ip domain-lookup
-hostname <nombre>_G15 # <nombre> donde se nombraron los Switches capa 3 SW# mientras que los de capa 2 S<#>
-do wr
-```
-
-## Direcciones IP
-
-- Dirección IP 192.168.X.0/24</br>
-- Dirección 10.0.X.0/24</br>
-
-Como el grupo es 15 Quedarían: 
-
-- 192.168.15.0/24</br>
-- 10.0.15.0/24</br>
-
-* 192.168.15.0/24
-
-|VLAN|Cantidad Host|Dir IP|1° Dir Utilizable|n° Dir Utilizable|Dir Broadcast|CDR|
-|--- |---          |---|---|---|---|---|
-|15  |30           | 192.168.15.0    |192.168.15.1     |192.168.15.30   |192.168.15.31   |192.168.15.0/27   |
-|25  |30           | 192.168.15.32   |192.168.15.33    |192.168.15.62   |192.168.15.63   |192.168.32.32/27  |
-|35  |30           | 192.168.15.64   |192.168.15.65    |192.168.15.94   |192.168.15.95   |192.168.32.64/27  |
-|45  |30           | 192.168.15.96   |192.168.15.97    |192.168.15.126  |192.168.15.127  |192.168.32.96/27  |
-|55  |30           | 192.168.15.128  |192.168.15.129   |192.168.15.158  |192.168.15.159  |192.168.32.128/27 |
-|65  |30           | 192.168.15.160  |192.168.15.161   |192.168.15.190  |192.168.15.191  |192.168.32.160/27 |
-
-* 10.0.15.0/24
-
-|Cantidad Host|Dir IP|1° Dir Utilizable|n° Dir Utilizable|Dir Broadcast|CDR|
-|---|---|---|---|---|---|
-|2| 10.0.15.0   |10.0.15.1   |10.0.15.2   |10.0.15.3    |10.0.15.0/30   |
-|2| 10.0.15.4   |10.0.15.5   |10.0.15.6   |10.0.15.7    |10.0.15.4/30   |
-|2| 10.0.15.8   |10.0.15.9   |10.0.15.10  |10.0.15.11   |10.0.15.8/30   |
-|2| 10.0.15.12  |10.0.15.13  |10.0.15.14  |10.0.15.15   |10.0.15.12/30  |
-|2| 10.0.15.16  |10.0.15.17  |10.0.15.18  |10.0.15.19   |10.0.15.16/30  |
-|2| 10.0.15.20  |10.0.15.21  |10.0.15.22  |10.0.15.23   |10.0.15.20/30  |
-|2| 10.0.15.24  |10.0.15.25  |10.0.15.26  |10.0.15.27   |10.0.15.24/30  |
-|2| 10.0.15.28  |10.0.15.29  |10.0.15.30  |10.0.15.31   |10.0.15.28/30  |
-
-
-## LADO IZQUIERDO
-
-```shell
+# LADO IZQUIERDO
 # SW4
 enable
 conf t
@@ -218,11 +167,8 @@ switchport mode access
 switchport access vlan 25
 exit
 do wr
-```
 
-## LADO DERECHO
-
-```shell
+# LADO DERECHO
 # SW12
 enable
 conf t
@@ -391,10 +337,8 @@ switchport mode access
 switchport access vlan 45
 exit
 do wr
-```
 
-## LADO CENTRAL
-```shell
+# CENTRO
 # SW5
 enable
 conf t
@@ -592,11 +536,8 @@ network 10.0.15.12 0.0.0.3
 no auto-summary
 exit
 do wr
-```
 
-## ACL
-
-```shell
+# ACL
 # SW5
 enable
 conf t
@@ -646,4 +587,3 @@ interface Vlan55
  ip access-group VLAN55_ACL in
 exit
 do wr
-```
