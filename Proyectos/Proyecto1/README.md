@@ -46,7 +46,38 @@ Como el grupo es 15 Quedarían:
 |2| 10.0.15.24  |10.0.15.25  |10.0.15.26  |10.0.15.27   |10.0.15.24/30  |
 |2| 10.0.15.28  |10.0.15.29  |10.0.15.30  |10.0.15.31   |10.0.15.28/30  |
 
+![alt text](./img/Topologia.png)
 
+|Dispositivo|Clasificación|
+|---|---|
+|SW1|Distribución Lado Izquierdo (LACP)|
+|SW2|Distribución Lado Izquierdo (LACP)|
+|SW3|Distribución Lado Izquierdo (LACP)|
+|SW4|Core Lado Izquierdo|
+|SW5|Edificios|
+|SW6|Edificios|
+|SW7|Edificios|
+|SW8|Edificios|
+|SW9|Distribución Lado Derecho (PAGP)|
+|SW10|Distribución Lado Derecho (PAGP)|
+|SW11|Distribución Lado Derecho (PAGP)|
+|SW12|Core Lado Derecho|
+|S1|Capa de Acceso|
+|S2|Capa de Acceso|
+|S3|Capa de Acceso|
+|S4|Capa de Acceso|
+
+## SERVIDORES DHCP
+
+* Servidor Lado Izquierdo (Server 0)
+
+![alt text](./img/SERVER0.png)
+
+* Servidor Lado Derecho (Server 1)
+
+![alt text](./img/SERVER1.png)
+
+# COMANDOS UTILIZADOS
 ## LADO IZQUIERDO
 
 ```shell
@@ -594,6 +625,7 @@ exit
 do wr
 ```
 
+# ACL UTILIZADO EN SWITCHES 5 Y 7
 ## ACL
 
 ```shell
@@ -601,24 +633,24 @@ do wr
 enable
 conf t
 ip access-list extended VLAN15_ACL
- deny icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo
- permit icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
- deny ip 192.168.15.0 0.0.0.31 192.168.15.32 0.0.0.31
- deny ip 192.168.15.0 0.0.0.31 192.168.15.128 0.0.0.31
- permit ip any any
+deny icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo
+permit icmp 192.168.15.0 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+deny ip 192.168.15.0 0.0.0.31 192.168.15.32 0.0.0.31
+deny ip 192.168.15.0 0.0.0.31 192.168.15.128 0.0.0.31
+permit ip any any
 exit
 ip access-list extended VLAN25_ACL
- deny icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo
- permit icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
- deny ip 192.168.15.32 0.0.0.31 192.168.15.0 0.0.0.31
- deny ip 192.168.15.32 0.0.0.31 192.168.15.96 0.0.0.31
- permit ip any any
+deny icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo
+permit icmp 192.168.15.32 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+deny ip 192.168.15.32 0.0.0.31 192.168.15.0 0.0.0.31
+deny ip 192.168.15.32 0.0.0.31 192.168.15.96 0.0.0.31
+permit ip any any
 exit
 interface Vlan15
- ip access-group VLAN15_ACL in
+ip access-group VLAN15_ACL in
 exit
 interface Vlan25
- ip access-group VLAN25_ACL in
+ip access-group VLAN25_ACL in
 exit
 do wr
 
@@ -626,24 +658,24 @@ do wr
 enable
 conf t
 ip access-list extended VLAN45_ACL
- deny icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo
- permit icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
- deny ip 192.168.15.96 0.0.0.31 192.168.15.32 0.0.0.31
- deny ip 192.168.15.96 0.0.0.31 192.168.15.128 0.0.0.31
- permit ip any any
+deny icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo
+permit icmp 192.168.15.96 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+deny ip 192.168.15.96 0.0.0.31 192.168.15.32 0.0.0.31
+deny ip 192.168.15.96 0.0.0.31 192.168.15.128 0.0.0.31
+permit ip any any
 exit
 ip access-list extended VLAN55_ACL
- deny icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo
- permit icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
- deny ip 192.168.15.128 0.0.0.31 192.168.15.0 0.0.0.31
- deny ip 192.168.15.128 0.0.0.31 192.168.15.96 0.0.0.31
- permit ip any any
+deny icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo
+permit icmp 192.168.15.128 0.0.0.31 192.168.15.64 0.0.0.31 echo-reply
+deny ip 192.168.15.128 0.0.0.31 192.168.15.0 0.0.0.31
+deny ip 192.168.15.128 0.0.0.31 192.168.15.96 0.0.0.31
+permit ip any any
 exit
 interface Vlan45
- ip access-group VLAN45_ACL in
+ip access-group VLAN45_ACL in
 exit
 interface Vlan55
- ip access-group VLAN55_ACL in
+ip access-group VLAN55_ACL in
 exit
 do wr
 ```
