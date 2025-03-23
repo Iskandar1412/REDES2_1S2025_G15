@@ -1,0 +1,120 @@
+QUE SE HIZO:
+• TOPOLOGIA
+• CREACION DE VLANS 16 y 26 
+• LACP
+
+#VLANS FALTANTES
+vlan 36
+name WEB_SERVERS
+vlan 46
+name DHCP_SERVERS
+
+
+Switch0:
+enable
+conf ter
+vlan 16
+name ADMIN
+vlan 26
+name ESTUDIANTES
+exit
+interface fa0/11
+switchport mode access
+switchport access vlan 16
+exit
+interface fa0/12
+switchport mode access
+switchport access vlan 26
+exit
+interface range fa0/1-10
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+interface range fa0/13-24
+switchport mode trunk
+switchport trunk allowed vlan all
+exit
+do write
+
+
+Multilayer Switch 3:
+enable
+conf ter
+ip routing
+interface range fa0/1-4
+no switchport
+channel-protocol lacp
+channel-group 1 mode active
+exit
+interface port-channel 1
+ip address 10.0.15.1 255.255.255.252
+exit
+
+Multilayer Switch 0:
+enable
+conf ter
+ip routing
+interface range fa0/5-8
+no switchport
+channel-protocol lacp
+channel-group 2 mode active
+exit
+interface port-channel 2
+ip address 10.0.15.5 255.255.255.252
+exit
+
+
+Multilayer Switch 2:
+enable
+conf ter
+ip routing
+interface range fa0/9-12
+no switchport
+channel-protocol lacp
+channel-group 3 mode active
+exit
+interface port-channel 3
+ip address 10.0.15.9 255.255.255.252
+exit
+
+
+
+Multilayer Switch 4:
+enable
+conf ter
+ip routing
+interface range fa0/1-4
+no switchport
+channel-protocol lacp
+channel-group 1 mode active
+exit
+interface port-channel 1
+ip address 10.0.15.2 255.255.255.252
+exit
+interface range fa0/5-8
+no switchport
+channel-protocol lacp
+channel-group 2 mode active
+exit
+interface port-channel 2
+ip address 10.0.15.6 255.255.255.252
+exit
+interface range fa0/9-12
+no switchport
+channel-protocol lacp
+channel-group 3 mode active
+exit
+interface port-channel 3
+ip address 10.0.15.10 255.255.255.252
+exit
+
+
+
+
+
+
+
+
+
+
+
