@@ -49,6 +49,12 @@ exit
 interface port-channel 1
 ip address 10.0.15.1 255.255.255.252
 exit
+router eigrp 1
+network 10.0.15.0
+no auto-summary
+exit
+do write
+
 
 Multilayer Switch 0:
 enable
@@ -62,6 +68,11 @@ exit
 interface port-channel 2
 ip address 10.0.15.5 255.255.255.252
 exit
+router eigrp 1
+network 10.0.15.4
+no auto-summary
+exit
+do write
 
 
 Multilayer Switch 2:
@@ -76,6 +87,11 @@ exit
 interface port-channel 3
 ip address 10.0.15.9 255.255.255.252
 exit
+router eigrp 1
+network 10.0.15.8
+no auto-summary
+exit
+do write
 
 
 
@@ -119,6 +135,9 @@ ip address 10.0.15.18 255.255.255.252
 no shutdown
 exit
 router eigrp 1
+network 10.0.15.0 0.0.0.3
+network 10.0.15.4 0.0.0.3
+network 10.0.15.8 0.0.0.3
 network 10.0.15.12 0.0.0.3
 network 10.0.15.16 0.0.0.3
 no auto-summary
