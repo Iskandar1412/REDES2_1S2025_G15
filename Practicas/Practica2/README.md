@@ -279,6 +279,9 @@ do write
 
 ![](./Document/HTTP.png)
 
+![](./Document/Pagina.png)
+
+
 ## DHCP
 
 ![](./Document/POOL.png)
