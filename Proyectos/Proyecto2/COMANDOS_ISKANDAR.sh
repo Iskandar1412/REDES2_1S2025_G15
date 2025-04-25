@@ -13,6 +13,8 @@ name RED40
 exit
 do wr
 
+ip routing
+
 interface vlan 30
 ip address 192.168.26.1 255.255.255.224
 no shutdown
@@ -24,30 +26,27 @@ exit
 do wr
 
 interface range fa0/2-4
-switchport
-switchport mode trunk
-switchport trunk allowed vlan 30,40
+no shut
+
 channel-protocol lacp
 channel-group 3 mode active
 exit
 
 interface port-channel 3
-switchport
-switchport mode trunk
-switchport trunk allowed vlan 30,40
+no shut
+
 exit
 
 interface range fa0/5-7
-switchport
-switchport mode trunk
-switchport trunk allowed vlan 30,40
+no shut
+
 channel-protocol lacp
 channel-group 4 mode active
 exit
+
 interface port-channel 4
-switchport
-switchport mode trunk
-switchport trunk allowed vlan 30,40
+no shut
+
 exit
 do wr
 
@@ -55,8 +54,6 @@ ip routing
 router eigrp 15
 network 192.168.26.0 0.0.0.31
 network 192.168.26.32 0.0.0.31
-network 192.168.26.64 0.0.0.3
-network 192.168.26.68 0.0.0.3
 no auto-summary
 exit
 do wr
@@ -70,7 +67,8 @@ hostname MS2.2
 do wr
 
 interface range fa0/2-4
-switchport
+no shut
+switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 30,40
 channel-protocol lacp
@@ -78,23 +76,18 @@ channel-group 3 mode active
 exit
 
 interface port-channel 3
-switchport
+no shut
+switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 30,40
 exit
 do wr
 
 int fa0/1
-no switchport
-ip address 192.168.26.73 255.255.255.252
-exit
-do wr
-
-ip routing
-router eigrp 15
-network 192.168.26.72 0.0.0.3
-network 192.168.26.64 0.0.0.3
-no auto-summary
+no shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
@@ -107,24 +100,18 @@ hostname MS2.4
 do wr
 
 int fa0/1
-no switchport
-ip address 192.168.26.74 255.255.255.252
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
 int fa0/2
-no switchport
-ip address 192.168.26.85 255.255.255.252
+switchport mode access
+switchport access vlan 30
 exit
 do wr
 
-ip routing
-router eigrp 15
-network 192.168.26.72 0.0.0.3
-network 192.168.26.84 0.0.0.3
-no auto-summary
-exit
-do wr
 
 ! MS2.3
 
@@ -135,30 +122,26 @@ hostname MS2.3
 do wr
 
 interface range fa0/5-7
-switchport
+no shut
+switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 30,40
 channel-protocol lacp
 channel-group 4 mode active
 exit
 interface port-channel 4
-switchport
+no shut
+switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 30,40
 exit
 do wr
 
 int fa0/1
-no switchport
-ip address 192.168.26.77 255.255.255.252
-exit
-do wr
-
-ip routing
-router eigrp 15
-network 192.168.26.68 0.0.0.3
-network 192.168.26.76 0.0.0.3
-no auto-summary
+no shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
@@ -171,22 +154,18 @@ hostname MS2.5
 do wr
 
 int fa0/1
-no switchport
-ip address 192.168.26.78 255.255.255.252
+no shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
 int fa0/2
-no switchport
-ip address 192.168.26.81 255.255.255.252
-exit
-do wr
-
-ip routing
-router eigrp 15
-network 192.168.26.80 0.0.0.3
-network 192.168.26.76 0.0.0.3
-no auto-summary
+no shut
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
@@ -199,8 +178,9 @@ hostname S2.1
 do wr
 
 int fa0/2
-no switchport
-ip address 192.168.26.82 255.255.255.252
+no shut
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
