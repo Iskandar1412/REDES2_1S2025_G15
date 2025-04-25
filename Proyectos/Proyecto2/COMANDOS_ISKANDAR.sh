@@ -32,9 +32,6 @@ exit
 interface range fa0/2-4
 no shut
 no switchport
-no switchport trunk allowed vlan 30,40
-no switchport trunk encapsulation dot1q
-no switchport mode trunk
 channel-protocol lacp
 channel-group 3 mode active
 exit
@@ -42,18 +39,12 @@ exit
 interface port-channel 3
 no shut
 no switchport
-no switchport trunk allowed vlan 30,40
-no switchport trunk encapsulation dot1q
-no switchport mode trunk
 ip add 192.168.26.65 255.255.255.252
 exit
 
 interface range fa0/5-7
 no shut
 no switchport
-no switchport trunk allowed vlan 30,40
-no switchport trunk encapsulation dot1q
-no switchport mode trunk
 channel-protocol lacp
 channel-group 4 mode active
 exit
@@ -61,9 +52,6 @@ exit
 interface port-channel 4
 no shut
 no switchport
-no switchport trunk allowed vlan 30,40
-no switchport trunk encapsulation dot1q
-no switchport mode trunk
 ip add 192.168.26.77 255.255.255.252
 exit
 do wr
@@ -196,24 +184,23 @@ ip add 192.168.26.82 255.255.255.252
 exit
 do wr
 
-int gi0/2
+int gi0/0
 no shut
 exit
 do wr
 
-int gi0/2.30
+int gi0/0.30
 no shut
 encapsulation dot1Q 30
 exit
 do wr
 
-int gi0/2.40
+int gi0/0.40
 no shut
 encapsulation dot1Q 40
 exit
 do wr
 
-ip routing
 router eigrp 15
 network 192.168.26.76 0.0.0.3
 network 192.168.26.80 0.0.0.3
