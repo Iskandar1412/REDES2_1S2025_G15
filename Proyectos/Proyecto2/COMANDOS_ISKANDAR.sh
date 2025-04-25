@@ -24,26 +24,30 @@ exit
 do wr
 
 interface range fa0/2-4
-
 switchport
 switchport mode trunk
+switchport trunk allowed vlan 30,40
 channel-protocol lacp
 channel-group 3 mode active
 exit
 
 interface port-channel 3
-no switchport
-ip address 192.168.26.65 255.255.255.252
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 
 interface range fa0/5-7
-no switchport
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 channel-protocol lacp
 channel-group 4 mode active
 exit
 interface port-channel 4
-no switchport
-ip address 192.168.26.69 255.255.255.252
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
@@ -66,13 +70,17 @@ hostname MS2.2
 do wr
 
 interface range fa0/2-4
-no switchport
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 channel-protocol lacp
 channel-group 3 mode active
 exit
+
 interface port-channel 3
-no switchport
-ip address 192.168.26.66 255.255.255.252
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
@@ -127,13 +135,16 @@ hostname MS2.3
 do wr
 
 interface range fa0/5-7
-no switchport
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 channel-protocol lacp
 channel-group 4 mode active
 exit
 interface port-channel 4
-no switchport
-ip address 192.168.26.70 255.255.255.252
+switchport
+switchport mode trunk
+switchport trunk allowed vlan 30,40
 exit
 do wr
 
