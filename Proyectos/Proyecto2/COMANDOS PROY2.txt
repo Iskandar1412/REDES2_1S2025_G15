@@ -24,10 +24,8 @@ exit
 #EIGRP (SE HACE DE ULTIMO PARA PROBAR)
 router eigrp 100
 redistribute bgp 65001 metric 10000 100 255 1 1500
-redistribute ospf 1
+redistribute eigrp 1
 exit
-
-
 
 #MULTILAYER SWITCH1
 ena 
@@ -50,9 +48,11 @@ network 172.15.20.0 mask 255.255.255.252
 exit
 
 #EIGRP
-router ospf 2
-redistribute bgp 65002 subnets
-redistribute ospf 2
+router eigrp 2
+redistribute bgp 65002 
+exit
+router bgp 65002
+redistribute eigrp 2
 exit
 
 
@@ -85,6 +85,8 @@ exit
 router ospf 3
 network 192.168.15.144 0.0.0.3 area 0
 redistribute bgp 65003 subnets
+exit
+router bgp 65003
 redistribute ospf 3
 exit
 
@@ -246,7 +248,7 @@ conf t
 ip routing
 interface range fa0/5-7
 no switchport
-channel-protocol lacp
+
 channel-group 6 mode active
 exit
 interface port-channel 6
