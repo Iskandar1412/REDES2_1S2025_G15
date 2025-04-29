@@ -302,3 +302,186 @@ do write
 #AGREGAR EN ROUTERS Y SWITCHES CAPA 3
 ip helper-address 192.168.36.68
 www.Proyecto2_Grupo15.com
+
+
+#TELECOM Uno
+##Multilayer switch1.1
+ip routing
+
+interface FastEthernet0/1
+no switchport
+ip address 192.168.16.89 255.255.255.252
+duplex auto
+speed auto
+
+interface range FastEthernet0/2 - 4
+no switchport
+no ip address
+channel-protocol lacp
+channel-group 1 mode active
+exit
+
+interface range FastEthernet0/5 - 7
+no switchport
+no ip address
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+interface Port-channel1
+no switchport
+ip address 192.168.16.66 255.255.255.252
+exit
+
+interface Port-channel2
+no switchport
+ip address 192.168.16.70 255.255.255.252
+exit
+
+router eigrp 100
+network 192.168.16.68 0.0.0.3
+network 192.168.16.64 0.0.0.3
+network 192.168.16.88 0.0.0.3
+auto-summary
+exit
+
+do wr
+
+##Multilayer switch1.2
+interface FastEthernet0/1
+no switchport
+ip address 192.168.16.73 255.255.255.252
+exit
+
+interface range FastEthernet0/2 - 4
+no switchport
+no ip address
+channel-protocol lacp
+channel-group 1 mode active
+exit
+
+interface Port-channel1
+no switchport
+ip address 192.168.16.65 255.255.255.252
+exit
+
+router eigrp 100
+network 192.168.16.72 0.0.0.3
+network 192.168.16.64 0.0.0.3
+auto-summary
+exit
+
+do wr
+##Multilayer switch1.3
+interface FastEthernet0/1
+no switchport
+ip address 192.168.16.77 255.255.255.252
+exit
+
+interface range FastEthernet0/2 - 4
+no switchport
+no ip address
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+interface Port-channel2
+no switchport
+ip address 192.168.16.69 255.255.255.252
+exit
+
+router eigrp 100
+network 192.168.16.76 0.0.0.3
+network 192.168.16.68 0.0.0.3
+auto-summary
+exit
+
+do wr
+##Multilayer switch1.4
+ip routing
+
+interface FastEthernet0/1
+no switchport
+ip address 192.168.16.74 255.255.255.252
+exit
+
+interface FastEthernet0/2
+no switchport
+ip address 192.168.16.78 255.255.255.252
+exit
+
+interface FastEthernet0/3
+no switchport
+ip address 192.168.16.81 255.255.255.252
+exit
+
+interface FastEthernet0/4
+no switchport
+ip address 192.168.16.85 255.255.255.252
+exit
+
+interface vlan10
+ip address 192.168.16.1 255.255.255.224
+ip helper-address 192.168.16.50
+exit
+
+interface vlan20
+ip address 192.168.16.33 255.255.255.224
+exit
+
+router eigrp
+network 192.168.16.72 0.0.0.3
+ network 192.168.16.76 0.0.0.3
+ network 192.168.16.80 0.0.0.3
+ network 192.168.16.84 0.0.0.3
+ network 192.168.16.0 0.0.0.31
+ network 192.168.16.32 0.0.0.31
+ auto-summary
+exit
+do wr
+##Multilayer switch1.5
+vlan 10
+name ATENCION_CLIENTE
+exit
+ip routing
+interface FastEthernet0/3
+no switchport
+ip address 192.168.16.82 255.255.255.252
+exit
+interface range FastEthernet0/4-24
+switchport access vlan 10
+switchport mode access
+exit
+interface vlan 10
+ip address 192.168.16.1 255.255.255.224
+ip helper-address 192.168.16.50
+exit
+router eigrp 100
+192.168.16.0 0.0.0.31
+192.168.16.80 0.0.0.1
+auto-summary
+exit
+do wr
+
+##Multilayer switch1.6
+vlan 20
+name ADMINISTRACION
+exit
+ip routing
+interface FastEthernet0/4
+no switchport
+ip address 192.168.16.86 255.255.255.252
+exit
+interface range FastEthernet0/5-24
+switchport access vlan 20
+switchport mode access
+exit
+interface vlan 20
+ip address 192.168.16.33 255.255.255.224
+exit
+router eigrp 100
+192.168.16.32 0.0.0.31
+192.168.16.84 0.0.0.1
+auto-summary
+exit
+do wr
