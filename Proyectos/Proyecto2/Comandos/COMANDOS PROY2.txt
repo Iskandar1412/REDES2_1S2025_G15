@@ -485,3 +485,55 @@ router eigrp 100
 auto-summary
 exit
 do wr
+
+#ACL-----------
+#SW1.5
+ena
+conf t
+ip access-list extended VLAN10_ACL
+permit icmp 192.168.16.0 0.0.0.31 192.168.16.32 0.0.0.31 echo-reply
+permit icmp 192.168.16.0 0.0.0.31 192.168.36.0 0.0.0.63 echo-reply
+permit icmp 192.168.16.0 0.0.0.31 192.168.36.64 0.0.0.63 echo-reply
+deny ip 192.168.16.0 0.0.0.31 192.168.16.32 0.0.0.31
+deny ip 192.168.16.0 0.0.0.31 192.168.26.32 0.0.0.31
+deny ip 192.168.16.0 0.0.0.31 192.168.36.0 0.0.0.63
+deny ip 192.168.16.0 0.0.0.31 192.168.36.64 0.0.0.63
+permit ip any any
+exit
+interface vlan 10
+ip access-group VLAN10_ACL in
+exit
+do wr
+#SW2.4
+ena
+conf t
+ip access-list extended VLAN30_ACL
+permit icmp 192.168.26.0 0.0.0.31 192.168.16.32 0.0.0.31 echo-reply
+permit icmp 192.168.26.0 0.0.0.31 192.168.36.0 0.0.0.63 echo-reply
+permit icmp 192.168.26.0 0.0.0.31 192.168.36.64 0.0.0.63 echo-reply
+deny ip 192.168.26.0 0.0.0.31 192.168.16.32 0.0.0.31
+deny ip 192.168.26.0 0.0.0.31 192.168.36.0 0.0.0.63
+deny ip 192.168.26.0 0.0.0.31 192.168.36.64 0.0.0.63
+permit ip any any
+exit
+interface vlan 30
+ip access-group VLAN30_ACL in
+exit
+do wr
+#SW2.5
+ena
+conf t
+ip access-list extended VLAN40_ACL
+permit icmp 192.168.26.32 0.0.0.31 192.168.16.32 0.0.0.31 echo-reply
+permit icmp 192.168.26.32 0.0.0.31 192.168.36.0 0.0.0.63 echo-reply
+permit icmp 192.168.26.32 0.0.0.31 192.168.36.64 0.0.0.63 echo-reply
+deny ip 192.168.26.32 0.0.0.31 192.168.16.32 0.0.0.31
+deny ip 192.168.26.32 0.0.0.31 192.168.16.0 0.0.0.31
+deny ip 192.168.26.32 0.0.0.31 192.168.36.0 0.0.0.63
+deny ip 192.168.26.32 0.0.0.31 192.168.36.64 0.0.0.63
+permit ip any any
+exit
+interface vlan 40
+ip access-group VLAN40_ACL in
+exit
+do wr
