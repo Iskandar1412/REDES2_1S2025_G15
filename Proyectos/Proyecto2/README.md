@@ -3,19 +3,19 @@
 
 ### Completa
 
-[](./img/TopologiaCompleta.png)
+![](./img/TopologiaCompleta.png)
 
 ### Telecom 1
 
-[](./img/Telecom.png)
+![](./img/Telecom.png)
 
 ### Redes Nacionales
 
-[](./img/RedesNacionales.png)
+![](./img/RedesNacionales.png)
 
 ### Conexiones Futuras
 
-[](./img/ConexionesFuturas.png)
+![](./img/ConexionesFuturas.png)
 
 ## Direcciones
 
